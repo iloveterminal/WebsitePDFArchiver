@@ -1,4 +1,3 @@
-require 'anemone'
 require 'uri'
 
 namespace :archiver do
@@ -16,22 +15,17 @@ namespace :archiver do
       full_path = Rails.root.join('urls', filename).to_s
 
       # Output files generated from previous runs will NOT be overwritten.
-      if File.exists?(full_path)
+      if File.exist?(full_path)
         Rails.logger.info "Skipping existing file: '#{urls_prefix + filename}'"
       else
         urls_file = File.open(full_path, 'a')
-        # Intentional delay and single thread to reduce server resource spikes.
-        # https://github.com/chriskite/anemone
-        Anemone.crawl(
-          url,
-          :discard_page_bodies => true,
-          :skip_query_strings => true,
-          :threads => 1,
-          :delay => 0.5
-        ) do |anemone|
-          anemone.on_every_page do |page|
+        # https://github.com/postmodern/spidr
+        Spidr.site(url) do |spider|
+          spider.every_url do |url|
             # Each URL will have comma and newline delimiter.
-            urls_file.write("#{page.url},\r\n")
+            urls_file.write("#{url},\r\n")
+            # Intentional delay between URLs to reduce server resource spikes.
+            sleep(0.5)
           end
         end
         urls_file.close
@@ -53,7 +47,7 @@ namespace :archiver do
         # Handle filename inputs with and without leading 'urls/'.
         filename = filename[urls_prefix.length..-1] if filename.start_with?(urls_prefix)
         file_path = Rails.root.join('urls', filename)
-        if File.exists?(file_path)
+        if File.exist?(file_path)
           urls_array = File.read(file_path).split(",")
           urls_array.each do |url|
             generate_pdf(url.strip) unless url.strip.empty?
@@ -95,12 +89,12 @@ namespace :archiver do
       path = last_path + '.pdf'
 
       # If it doesn't already exist, create a subfolder structure mirroring slashes in URL.
-      FileUtils.mkdir_p(directory) unless File.exists?(directory)
+      FileUtils.mkdir_p(directory) unless File.exist?(directory)
       file_path = directory + path
       log_path = "#{host_folder}/#{folder_path}#{path}"
   
       # PDFs generated from previous runs will NOT be overwritten.
-      if File.exists?(file_path)
+      if File.exist?(file_path)
         Rails.logger.info "Skipping existing file: '#{log_path}'"
       else
         Rails.logger.info "Creating file: '#{log_path}'"

@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.0'
+ruby '3.3.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 7.1.3'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.5.4'
+gem 'sqlite3', '~> 1.7.3'
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 6.4.1'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -26,10 +26,7 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
-gem "net-http"
-
-# Need to pin older version of ffi for sqlite3
-gem 'ffi', '1.16.3'
+gem 'sprockets-rails'
 
 # A PDF generation plugin
 gem "wicked_pdf"
@@ -37,8 +34,8 @@ gem "wicked_pdf"
 # Command line tool to render HTML into PDF, required by wicked_pdf
 gem "wkhtmltopdf-binary"
 
-# Web spider framework to collect URLS
-gem 'anemone', '~> 0.7.2'
+# Web spidering library to collect URLS
+gem 'spidr', '~> 0.7.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
