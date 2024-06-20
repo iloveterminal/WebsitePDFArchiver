@@ -38,3 +38,9 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore all URL lists and generated PDFs.
+/pdfs/*
+/urls/*
+!/pdfs/.keep
+!/urls/.keep
