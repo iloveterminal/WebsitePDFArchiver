@@ -16,7 +16,7 @@ Tested to work with:
 
 # How to use
 
-Most of the code resides in `lib/tasks/archiver.rake`, which contains the following 3 tasks:
+Most of the code resides in [lib/tasks/archiver.rake](lib/tasks/archiver.rake), which contains the following 3 tasks:
 
 ## find_urls
 
@@ -24,7 +24,10 @@ Crawls a website and outputs a comma delimited text file list of URLs to later f
 
 **Input:** 1 argument, the root URL from which to begin crawling.
 
-**How to run:** `rails archiver:find_urls['https://mywebsite.com']`
+**How to run:** 
+```
+rails archiver:find_urls['https://mywebsite.com']
+```
 
 **Output:** 1 text file per unique input URL, saved to `urls/mywebsite_com.txt`
 
@@ -34,7 +37,10 @@ Converts a single URL to PDF, great for testing before running a large list of U
 
 **Input:** 1 argument, the URL to convert to PDF.
 
-**How to run:** `rails archiver:pdf_from_url['https://mywebsite.com/sub-folder/awesome-page']`
+**How to run:** 
+```
+rails archiver:pdf_from_url['https://mywebsite.com/sub-folder/awesome-page']
+```
 
 **Output:** 1 PDF file per unique path, saved to `pdfs/mywebsite_com/sub-folder/awesome-page.pdf`
 
@@ -44,7 +50,10 @@ Converts a comma delimited text file list of URLs to PDFs. Auto creates a folder
 
 **Input:** 1 argument, the relative path of the comma delimited `.txt` file in the `urls/` folder.
 
-**How to run:** `rails archiver:pdfs_from_list['urls/mywebsite_com.txt']`
+**How to run:** 
+```
+rails archiver:pdfs_from_list['urls/mywebsite_com.txt']
+```
 
 **Output:** 1 PDF file per unique URL in text file, saved to `pdfs/mywebsite_com/sub-folder/awesome-page.pdf`
 
