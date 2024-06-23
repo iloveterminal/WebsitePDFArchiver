@@ -14,6 +14,7 @@ namespace :archiver do
       filename = url.dup
       filename.sub!(/https?(\:)?(\/)?(\/)?(www\.)?/, '') if filename.include?("http")
       filename.sub!(/(www\.)?/, '') if filename.include?("www")
+      filename.delete_suffix!('/') if filename.end_with? '/'
       filename = filename.tr('.', '_').tr('/', '_').gsub(/[^a-z0-9]_\-/i, '') + txt_ext
       full_path = Rails.root.join('urls', filename).to_s
       log_path = urls_prefix + filename
