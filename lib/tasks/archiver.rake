@@ -86,13 +86,17 @@ namespace :archiver do
         Rails.logger.info "Skipping existing file: '#{log_path}'"
       else
         Rails.logger.info "Creating file: '#{log_path}'"
-        if is_pdf
-          # Download PDFs directly.
-          IO.copy_stream(URI.open(url), file_path)
-        else
-          # https://github.com/mileszs/wicked_pdf
-          pdf = WickedPdf.new.pdf_from_url(url)
-          File.open(file_path, 'wb') { |file| file << pdf }
+        begin
+          if is_pdf
+            # Download PDFs directly.
+            IO.copy_stream(URI.open(url), file_path)
+          else
+            # https://github.com/mileszs/wicked_pdf
+            pdf = WickedPdf.new.pdf_from_url(url)
+            File.open(file_path, 'wb') { |file| file << pdf }
+          end
+        rescue => e
+          Rails.logger.error "Error while creating file: '#{log_path}'. #{e.message}"
         end
       end
     end
