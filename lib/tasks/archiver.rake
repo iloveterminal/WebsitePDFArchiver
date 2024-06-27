@@ -99,7 +99,7 @@ namespace :archiver do
           pdf = WickedPdf.new.pdf_from_url(url)
           File.open(file_path, 'wb') { |file| file << pdf }
         end
-      rescue RuntimeError => e
+      rescue RuntimeError, OpenURI::HTTPError => e
         Rails.logger.error "Error while creating file: '#{log_path}'. #{e.message}"
       end
     end
