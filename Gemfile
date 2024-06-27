@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -29,10 +31,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'sprockets-rails'
 
 # A PDF generation plugin
-gem "wicked_pdf"
+gem 'wicked_pdf'
 
 # Command line tool to render HTML into PDF, required by wicked_pdf
-gem "wkhtmltopdf-binary"
+gem 'wkhtmltopdf-binary'
 
 # Web spidering library to collect URLS
 gem 'spidr', '~> 0.7.1'
@@ -51,6 +53,8 @@ group :development do
   #### gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Linter and formatter
+  gem 'rubocop'
 end
 
 group :test do
